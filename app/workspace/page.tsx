@@ -1,10 +1,13 @@
+"use client"
 import React from 'react';
+import AddNewTimeLog from "@/components/TimeLog/AddNewTimeLog";
 
 const Page = () => {
-    return (
-        <div>
 
-        </div>
+    return (
+        <main className={'p-4'}>
+            <AddNewTimeLog />
+        </main>
     );
 };
 

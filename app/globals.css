@@ -142,4 +142,7 @@
     h4{
         @apply w-max scroll-m-20 text-xl font-semibold tracking-tight;
     }
+    button{
+        @apply cursor-pointer;
+    }
 }
