@@ -4,7 +4,8 @@ import TimeLog from "@/lib/types/TimeLog";
 import {formatMinutesDurationToHours, formatStartEndEndTime} from "@/lib/timeformat";
 import {DateTime} from "luxon";
 import {Button} from "@/components/ui/button";
-import {SquarePen, Star, Trash} from "lucide-react";
+import {Star, Trash} from "lucide-react";
+import EditTimeLogDialog from "@/components/TimeLog/EditTimeLogDialog";
 
 type TimeLogCardProps = {
     timeLog: TimeLog;
@@ -29,25 +30,24 @@ const TimeLogCard = ({timeLog}: TimeLogCardProps) => {
             <CardHeader className={'w-1/4 truncate p-0'}>
                 {timeLog.description.length > 0 ? timeLog.description : 'No description provided.'}
             </CardHeader>
-            <div className={`border border-input w-[180px] px-3 py-2 text-sm truncate rounded-[8px] p-2 text-center ${timeLog.category ? "" :"text-muted-foreground"}`}>
+            <div
+                className={`border border-input w-[180px] px-3 py-2 text-sm truncate rounded-[8px] p-2 text-center ${timeLog.category ? "" : "text-muted-foreground"}`}>
                 {timeLog.category ? timeLog.category.name : "No Category"}
             </div>
             <div className={'space-x-3'}>
-                <Button variant={'secondary'}>
-                    Edit
-                    <SquarePen className={'size-3'}/>
-                </Button>
+                <EditTimeLogDialog timeLog={timeLog} />
                 <Button variant={'destructive'}>
                     Delete
                     <Trash className={'size-3'}/>
                 </Button>
                 <Button
-                    onClick={()=>{
+                    onClick={() => {
                         setIsImportant(!isImportant);
                     }}
                     className={'group'}
                     variant={'ghost'}>
-                    <Star className={`transition-all duration-1000 ${isImportant ? 'fill-primary stroke-primary group-focus:scale-110' : 'fill-transparent'}`}  />
+                    <Star
+                        className={`transition-all duration-1000 ${isImportant ? 'fill-primary stroke-primary group-focus:scale-110' : 'fill-transparent'}`}/>
                 </Button>
             </div>
         </Card>
