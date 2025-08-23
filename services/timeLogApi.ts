@@ -2,6 +2,7 @@ import api from "@/lib/api/axios";
 
 export async function getLogs() {
     const res = await api.get("/timelog");
+    console.log(res);
     return res.data;
 }
 

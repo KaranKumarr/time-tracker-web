@@ -4,15 +4,7 @@ import {getCategories} from "@/services/categoryApi";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import {Button} from "@/components/ui/button";
 import {SquarePen} from "lucide-react";
-
-interface Category {
-    id: number;
-    name: string;
-    description: string;
-    goalHours: number;
-    loggedHours: number;
-    createdAt: string;
-}
+import Category from "@/lib/types/Category";
 
 const AddNewTimeLog = () => {
 
@@ -23,7 +15,6 @@ const AddNewTimeLog = () => {
         const fetchData = async () => {
             const {data} = await getCategories()
             setCategories(data)
-            console.log(data)
         }
         fetchData()
     }, []);
