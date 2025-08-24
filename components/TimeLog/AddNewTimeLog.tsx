@@ -1,24 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Card, CardHeader} from "@/components/ui/card";
-import {getCategories} from "@/services/categoryApi";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import {Button} from "@/components/ui/button";
 import {SquarePen} from "lucide-react";
-import Category from "@/lib/types/Category";
 import SelectCategory from "@/components/TimeLog/SelectCategory";
+import {useCategories} from "@/context/CategoryContext";
 
 const AddNewTimeLog = () => {
 
-    const [categories, setCategories] = useState<Category[]>([])
+    const {categories} = useCategories();
     const [selectValue, setSelectValue] = useState<string | undefined>(undefined)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const {data} = await getCategories()
-            setCategories(data)
-        }
-        fetchData()
-    }, []);
 
     return (
         <>

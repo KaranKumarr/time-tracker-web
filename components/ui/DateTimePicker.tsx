@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import {ChevronDownIcon} from "lucide-react"
 
@@ -11,9 +9,10 @@ import {DateTime} from "luxon";
 
 type DateTimePickerProps = {
     initialDate: string;
+    onDateTimeChange: (date: string) => void;
 }
 
-export default function DateTimePicker({initialDate}: DateTimePickerProps) {
+export default function DateTimePicker({initialDate, onDateTimeChange}: DateTimePickerProps) {
     const [open, setOpen] = React.useState(false)
     const [date, setDate] = React.useState<Date | undefined>(DateTime.fromISO(initialDate).toJSDate())
     const [time, setTime] = React.useState<string>(
@@ -28,9 +27,13 @@ export default function DateTimePicker({initialDate}: DateTimePickerProps) {
                         setTime(event.target.value) // only update time state
                         const dt = DateTime.fromJSDate(date ?? new Date());
                         // Merge current date with new time
-                        const [hours, minutes, seconds] = time.split(":").map(Number);
-                        const updated = dt.set({ hour: hours, minute: minutes, second: seconds });
+                        const [hours, minutes, seconds] = event.target.value.split(":").map(Number);
+                        const updated = dt.set({hour: hours, minute: minutes, second: seconds});
+                        const newDate = updated.toISO({includeOffset: false})
                         setDate(updated.toJSDate());
+                        if (newDate) {
+                            onDateTimeChange(newDate);
+                        }
                     }}
                     type="time"
                     id="time-picker"
@@ -53,11 +56,20 @@ export default function DateTimePicker({initialDate}: DateTimePickerProps) {
                     </PopoverTrigger>
                     <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                         <Calendar
+                            defaultMonth={date}
                             mode="single"
                             selected={date}
                             captionLayout="dropdown"
                             onSelect={(date) => {
                                 setDate(date)
+                                const dt = DateTime.fromJSDate(date ?? new Date());
+                                const [hours, minutes, seconds] = time.split(":").map(Number);
+                                const updated = dt.set({hour: hours, minute: minutes, second: seconds});
+                                const newDate = updated.toISO({includeOffset: false})
+                                setDate(updated.toJSDate());
+                                if (newDate) {
+                                    onDateTimeChange(newDate);
+                                }
                                 setOpen(false)
                             }}
                         />

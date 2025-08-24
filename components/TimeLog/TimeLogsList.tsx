@@ -1,20 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import TimeLog from "@/lib/types/TimeLog";
-import {getLogs} from "@/services/timeLogApi";
+import React from 'react';
 import TimeLogCard from "@/components/TimeLog/TimeLogCard";
 import {formatTimeLogDate} from "@/lib/timeformat";
+import {useTimeLogs} from "@/context/TimeLogContext";
 
 const TimeLogsList = () => {
 
-    const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
+    const {timeLogs} = useTimeLogs();
 
-    useEffect(() => {
-        const fetchLogs = async ()=>{
-            const {data} = await getLogs();
-            setTimeLogs(data);
-        }
-        fetchLogs()
-    },[])
 
     return (
         <ul className={'py-4 space-y-2'}>
@@ -23,7 +15,7 @@ const TimeLogsList = () => {
                     <p className={'px-4 pb-0.5 text-primary'}>
                         {formatTimeLogDate(timeLog.startTime)}
                     </p>
-                    <TimeLogCard timeLog={timeLog} />
+                    <TimeLogCard timeLog={timeLog}/>
                 </li>
             ))}
         </ul>
