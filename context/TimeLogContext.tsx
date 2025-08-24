@@ -3,6 +3,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {editTimeLog, getTimeLogs} from "@/services/timeLogApi";
 import TimeLog from "@/lib/types/TimeLog";
+import {toast} from "sonner";
 
 interface TimeLogContextType {
     timeLogs: TimeLog[];
@@ -26,6 +27,7 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
             setTimeLogs((prev) =>
                 prev.map((tl) => (tl.id === timeLog.id ? res.data : tl))
             );
+            toast.success("Updated!")
         }
     }
 
