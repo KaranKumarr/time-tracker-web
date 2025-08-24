@@ -18,7 +18,7 @@ const DeleteTimeLogDialog = ({id}: DeleteTimeLogDialogProps) => {
 
     return (
         <Dialog>
-            <Button variant={'destructive'}>
+            <Button asChild variant={'destructive'}>
                 <DialogTrigger className={'flex items-center gap-1'}>
                     Delete
                     <Trash className={'size-3'}/>
