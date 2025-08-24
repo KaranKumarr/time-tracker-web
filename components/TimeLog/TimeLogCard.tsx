@@ -6,6 +6,7 @@ import {DateTime} from "luxon";
 import {Button} from "@/components/ui/button";
 import {Star, Trash} from "lucide-react";
 import EditTimeLogDialog from "@/components/TimeLog/EditTimeLogDialog";
+import DeleteTimeLogDialog from "@/components/TimeLog/DeleteTimeLogDialog";
 
 type TimeLogCardProps = {
     timeLog: TimeLog;
@@ -36,10 +37,7 @@ const TimeLogCard = ({timeLog}: TimeLogCardProps) => {
             </div>
             <div className={'space-x-3'}>
                 <EditTimeLogDialog timeLog={timeLog} />
-                <Button variant={'destructive'}>
-                    Delete
-                    <Trash className={'size-3'}/>
-                </Button>
+             <DeleteTimeLogDialog id={timeLog.id} />
                 <Button
                     onClick={() => {
                         setIsImportant(!isImportant);
