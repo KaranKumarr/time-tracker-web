@@ -1,13 +1,14 @@
 "use client";
 
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {editTimeLog, getTimeLogs} from "@/services/timeLogApi";
+import {deleteTimeLog, editTimeLog, getTimeLogs} from "@/services/timeLogApi";
 import TimeLog from "@/lib/types/TimeLog";
 import {toast} from "sonner";
 
 interface TimeLogContextType {
     timeLogs: TimeLog[];
-    updateTimeLog: (timeLog: TimeLog, updatedTimeLog: TimeLog) => void;
+    handleUpdateTimeLog: (timeLog: TimeLog, updatedTimeLog: TimeLog) => void;
+    handleDeleteTimeLog: (id: number) => void;
 }
 
 const TimeLogContext = createContext<TimeLogContextType | undefined>(undefined);
@@ -20,7 +21,7 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
         setTimeLogs(data); // ✅ adjust depending on ApiResponse shape
     };
 
-    const updateTimeLog = async (timeLog: TimeLog, updatedTimeLog: TimeLog) => {
+    const handleUpdateTimeLog = async (timeLog: TimeLog, updatedTimeLog: TimeLog) => {
         const res = await editTimeLog(timeLog, updatedTimeLog)
         if (res && res.status === 200) {
             // Replace the old timelog with the updated one in state
@@ -31,6 +32,17 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
         }
     }
 
+    const handleDeleteTimeLog = async (id: number) => {
+        const res = await deleteTimeLog(id)
+        console.log(res)
+        if (res && res.status === 204) {
+            setTimeLogs((prev) =>
+                prev.filter((tl) => tl.id !== id)
+            );
+            toast.success("Deleted!")
+        }
+    }
+
     // Load on mount
     useEffect(() => {
         fetchTimeLogs();
@@ -38,7 +50,7 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
 
     return (
         <TimeLogContext.Provider
-            value={{timeLogs, updateTimeLog}}
+            value={{timeLogs, handleUpdateTimeLog, handleDeleteTimeLog}}
         >
             {children}
         </TimeLogContext.Provider>

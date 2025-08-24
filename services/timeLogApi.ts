@@ -3,7 +3,6 @@ import TimeLog from "@/lib/types/TimeLog";
 
 export async function getTimeLogs() {
     const res = await api.get("/timelog");
-    console.log(res);
     return res.data;
 }
 
@@ -22,8 +21,6 @@ export async function editTimeLog(timeLog: TimeLog, updatedTimeLog: TimeLog) {
     if (timeLog.endTime !== updatedTimeLog.endTime) {
         updates.endTime = updatedTimeLog.endTime;
     }
-    console.log("YODATES")
-    console.log(updates);
     try {
         const res = await api.patch("/timelog/" + timeLog.id, updates);
         console.log(res);
@@ -33,6 +30,14 @@ export async function editTimeLog(timeLog: TimeLog, updatedTimeLog: TimeLog) {
     }
 }
 
+export async function deleteTimeLog(id: number) {
+    try {
+        const res = await api.delete("/timelog/" + id);
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 // export async function createSkill(skill: { name: string; goalHours?: number }) {
 //     const res = await api.post("/timelog", skill);

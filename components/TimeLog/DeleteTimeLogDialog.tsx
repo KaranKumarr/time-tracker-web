@@ -9,12 +9,15 @@ import {
 import React from 'react';
 import {Button} from "@/components/ui/button";
 import {Trash} from "lucide-react";
+import {useTimeLogs} from "@/context/TimeLogContext";
 
 type DeleteTimeLogDialogProps = {
     id: number;
 }
 
 const DeleteTimeLogDialog = ({id}: DeleteTimeLogDialogProps) => {
+
+    const {handleDeleteTimeLog} = useTimeLogs()
 
     return (
         <Dialog>
@@ -31,8 +34,14 @@ const DeleteTimeLogDialog = ({id}: DeleteTimeLogDialogProps) => {
                         Are you sure you want to delete this entry?
                     </DialogDescription>
                 </DialogHeader>
-                <Button variant={'destructive'} className={'ml-auto'}>
-                    Yes, send it to void!
+                <Button asChild={true}
+                        onClick={() => {
+                            handleDeleteTimeLog(id)
+                        }}
+                        variant={'destructive'} className={'ml-auto'}>
+                    <DialogTrigger>
+                        Yes, send it to void!
+                    </DialogTrigger>
                 </Button>
             </DialogContent>
         </Dialog>

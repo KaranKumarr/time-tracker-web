@@ -18,16 +18,9 @@ type EditTimeLogDialogProps = {
 const EditTimeLogDialog = ({timeLog}: EditTimeLogDialogProps) => {
 
     const {categories} = useCategories()
-    const {updateTimeLog} = useTimeLogs()
-
+    const {handleUpdateTimeLog} = useTimeLogs()
 
     const [updatedTimeLog, setUpdatedTimeLog] = useState<TimeLog>(timeLog)
-
-
-    const handleSubmit = async () => {
-        console.log("SUBMITTED")
-        await editTimeLog(timeLog, updatedTimeLog)
-    }
 
     return (
         <Dialog>
@@ -43,7 +36,7 @@ const EditTimeLogDialog = ({timeLog}: EditTimeLogDialogProps) => {
                 <form onSubmit={
                     (e) => {
                         e.preventDefault();
-                        updateTimeLog(timeLog, updatedTimeLog)
+                        handleUpdateTimeLog(timeLog, updatedTimeLog)
                     }
                 }>
                     <DialogHeader>
