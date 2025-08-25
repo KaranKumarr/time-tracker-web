@@ -13,7 +13,7 @@ export async function editTimeLog(timeLog: TimeLog, updatedTimeLog: TimeLog) {
         updates.description = updatedTimeLog.description;
     }
     if (timeLog.category !== updatedTimeLog.category) {
-        updates.category = updatedTimeLog.category;
+        updates.categoryId = updatedTimeLog.category.id;
     }
     if (timeLog.startTime !== updatedTimeLog.startTime) {
         updates.startTime = updatedTimeLog.startTime;
@@ -21,6 +21,7 @@ export async function editTimeLog(timeLog: TimeLog, updatedTimeLog: TimeLog) {
     if (timeLog.endTime !== updatedTimeLog.endTime) {
         updates.endTime = updatedTimeLog.endTime;
     }
+    console.log(updatedTimeLog)
     try {
         const res = await api.patch("/timelog/" + timeLog.id, updates);
         console.log(res);

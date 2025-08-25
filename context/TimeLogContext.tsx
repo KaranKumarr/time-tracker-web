@@ -34,7 +34,6 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
 
     const handleDeleteTimeLog = async (id: number) => {
         const res = await deleteTimeLog(id)
-        console.log(res)
         if (res && res.status === 204) {
             setTimeLogs((prev) =>
                 prev.filter((tl) => tl.id !== id)
@@ -43,7 +42,6 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
         }
     }
 
-    // Load on mount
     useEffect(() => {
         fetchTimeLogs();
     }, []);
