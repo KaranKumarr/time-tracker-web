@@ -1,5 +1,5 @@
 import api from "@/lib/api/axios";
-import TimeLog from "@/lib/types/TimeLog";
+import TimeLog, {CreateTimeLog} from "@/lib/types/TimeLog";
 
 export async function getTimeLogs() {
     const res = await api.get("/timelog");
@@ -21,10 +21,9 @@ export async function editTimeLog(timeLog: TimeLog, updatedTimeLog: TimeLog) {
     if (timeLog.endTime !== updatedTimeLog.endTime) {
         updates.endTime = updatedTimeLog.endTime;
     }
-    console.log(updatedTimeLog)
+
     try {
         const res = await api.patch("/timelog/" + timeLog.id, updates);
-        console.log(res);
         return res.data;
     } catch (e) {
         console.log(e);
@@ -40,7 +39,12 @@ export async function deleteTimeLog(id: number) {
     }
 }
 
-// export async function createSkill(skill: { name: string; goalHours?: number }) {
-//     const res = await api.post("/timelog", skill);
-//     return res.data;
-// }
+export async function createTimeLog(timeLog: CreateTimeLog) {
+    try {
+        const res = await api.post("/timelog", timeLog);
+        console.log(res);
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}

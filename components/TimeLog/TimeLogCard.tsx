@@ -14,7 +14,7 @@ type TimeLogCardProps = {
 
 const TimeLogCard = ({timeLog}: TimeLogCardProps) => {
 
-    const duration = timeLog.durationMinutes ? formatMinutesDurationToHours(timeLog.durationMinutes) : formatMinutesDurationToHours(DateTime.now().diff(DateTime.fromISO(timeLog.startTime), "minutes").minutes)
+    const duration = formatMinutesDurationToHours(timeLog.durationMinutes ?? 0);
 
     const [isImportant, setIsImportant] = useState(false)
 

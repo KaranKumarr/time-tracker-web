@@ -28,13 +28,17 @@ export function formatStartEndEndTime(startTime: string, endTime: string) {
 }
 
 export function formatMinutesDurationToHours(durationMinutes: number) {
-    const d = Duration.fromObject({ minutes: durationMinutes }).shiftTo("days", "hours", "minutes");
+    if (!Number.isFinite(durationMinutes) || durationMinutes < 0) durationMinutes = 0;
 
-    if (d.days > 0) {
-        return `${d.days}d+`;
-    } else if (d.hours > 0) {
-        return `${d.hours}h ${d.minutes}m`;
-    } else {
-        return `${d.minutes}m`;
-    }
+    const total = Math.floor(durationMinutes);
+
+    if (total === 0) return "<1m";
+
+    const days = Math.floor(total / 1440);               // 1440 = 24 * 60
+    const hours = Math.floor((total % 1440) / 60);
+    const minutes = total % 60;
+
+    if (days > 0) return `${days}d+`;
+    if (hours > 0) return `${hours}h ${minutes}m`;
+    return `${minutes}m`;
 }
