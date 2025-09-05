@@ -1,4 +1,4 @@
-import {DateTime, Duration} from "luxon";
+import {DateTime} from "luxon";
 
 export function formatTimeLogDate(time: string) {
     const dt = DateTime.fromISO(time);
@@ -42,3 +42,10 @@ export function formatMinutesDurationToHours(durationMinutes: number) {
     if (hours > 0) return `${hours}h ${minutes}m`;
     return `${minutes}m`;
 }
+
+export function formatAddNewLogTime (totalSeconds: number) {
+    const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const secs = String(totalSeconds % 60).padStart(2, "0");
+    return `${hrs}:${mins}:${secs}`;
+};

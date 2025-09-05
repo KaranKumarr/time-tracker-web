@@ -8,7 +8,6 @@ import DateTimePicker from "@/components/ui/DateTimePicker";
 import SelectCategory from "@/components/TimeLog/SelectCategory";
 import {Textarea} from "@/components/ui/textarea";
 import {useCategories} from "@/context/CategoryContext";
-import {editTimeLog} from "@/services/timeLogApi";
 import {useTimeLogs} from "@/context/TimeLogContext";
 
 type EditTimeLogDialogProps = {
@@ -19,6 +18,8 @@ const EditTimeLogDialog = ({timeLog}: EditTimeLogDialogProps) => {
 
     const {categories} = useCategories()
     const {handleUpdateTimeLog} = useTimeLogs()
+
+    const [selectCategory, setSelectCategory] = useState<string | undefined>(timeLog.category ? timeLog.category.id.toString() : undefined)
 
     const [updatedTimeLog, setUpdatedTimeLog] = useState<TimeLog>(timeLog)
 
@@ -88,8 +89,11 @@ const EditTimeLogDialog = ({timeLog}: EditTimeLogDialogProps) => {
                                 Category
                             </Label>
                             <SelectCategory
+                                setSelectOption={setSelectCategory}
+                                selectOption={selectCategory}
                                 defaultSelected={timeLog.category ? timeLog.category.id.toString() : undefined}
                                 categories={categories} onValueChange={(value) => {
+                                setSelectCategory(value)
                                 const updatedCategory = categories.find((cat) => {
                                     return cat.id.toString() === value;
                                 })
