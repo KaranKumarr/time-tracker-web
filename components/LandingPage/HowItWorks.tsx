@@ -51,7 +51,7 @@ const HowItWorks = () => {
                                         <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
                                             <Icon className="w-8 h-8 text-primary" />
                                         </div>
-                                        <h3 className="text-2xl font-semibold mb-4">{step.title}</h3>
+                                        <h3 className="text-2xl font-semibold mb-4 max-md:text-center max-md:w-full">{step.title}</h3>
                                         <p className="text-muted-foreground leading-relaxed">{step.description}</p>
                                     </div>
                                 </Card>

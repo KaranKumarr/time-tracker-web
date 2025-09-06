@@ -76,7 +76,7 @@ const Pricing = () => {
                             )}
 
                             <div className="text-center mb-8">
-                                <h3 className="text-2xl font-semibold mb-2">{plan.name}</h3>
+                                <h3 className="text-2xl font-semibold mb-2 max-md:w-full max-md:text-center">{plan.name}</h3>
                                 <div className="mb-4">
                                     <span className="text-4xl font-bold">{plan.price}</span>
                                     <span className="text-muted-foreground ml-2">/{plan.period}</span>
