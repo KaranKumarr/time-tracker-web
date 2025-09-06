@@ -1,47 +1,54 @@
 import { Card } from "@/components/ui/card";
-import { Clock, Target, BarChart3, Trophy, Calendar, Zap } from "lucide-react";
+import {Clock, Target, BarChart3, Calendar, Zap, ListFilter, Download} from "lucide-react";
 
 const Features = () => {
     const features = [
         {
             icon: Target,
             title: "Hour-Based Goals",
-            description: "Set specific learning goals with hour targets. Whether it's 50 hours for JavaScript or 200 hours for fluent Spanish, track exactly what matters."
+            description:
+                "Set specific goals with hour targets. Whether it's 50 hours for JavaScript or 200 hours for a side project, track exactly what matters."
         },
         {
             icon: Clock,
             title: "Precise Time Tracking",
-            description: "Start and stop timers with one click. Our smart tracking automatically categorizes your learning sessions and maintains accurate records."
+            description:
+                "Start and stop timers with one click. Our smart tracking automatically categorizes your sessions and maintains accurate records."
         },
         {
             icon: BarChart3,
             title: "Progress Analytics",
-            description: "Beautiful charts and insights show your learning velocity, consistency patterns, and goal completion rates over time."
+            description:
+                "Beautiful charts and insights show your velocity, consistency patterns, and goal completion rates over time."
         },
         {
-            icon: Trophy,
-            title: "Achievement System",
-            description: "Celebrate milestones with achievements and badges. Stay motivated with streaks, weekly targets, and completion rewards."
+            icon: ListFilter,
+            title: "Detailed Session History",
+            description:
+                "Review all your past sessions in one place with exact start times, end times, and durations."
         },
         {
             icon: Calendar,
-            title: "Learning Calendar",
-            description: "Visualize your learning journey with a comprehensive calendar view. Plan sessions and track your consistency patterns."
+            title: "Activity Calendar",
+            description:
+                "Visualize your journey with a comprehensive calendar view. Plan sessions and track your consistency patterns."
         },
         {
-            icon: Zap,
-            title: "Smart Reminders",
-            description: "Intelligent notifications keep you on track without being annoying. Customize reminders based on your learning schedule."
+            icon: Download,
+            title: "Flexible Data Export",
+            description:
+                "Export your history in multiple formats like CSV or Excel. Keep backups, share progress, or analyze in your favorite tools."
         }
     ];
+
 
     return (
         <section id={'features'} className="py-24 px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+                    <h2 className="text-4xl lg:text-5xl max-md:w-full font-bold tracking-tight mb-6 max-md:text-center">
                         Everything You Need to
-                        <span className="block bg-gradient-primary bg-clip-text text-primary">
+                        <span className="block text-primary">
               Master Your Goals
             </span>
                     </h2>
