@@ -10,7 +10,9 @@ import Footer from "@/components/LandingPage/Footer";
 export default function Home() {
   return (
         <>
-            <Navbar/>
+            <header className={'h-16'}>
+                <Navbar/>
+            </header>
             <Hero/>
             <Features/>
             <HowItWorks/>

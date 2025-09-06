@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-productivity.png";
 
 const Hero = () => {
     return (
-        <section id={'hero'} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section id={'hero'} className="max-md:py-4 relative min-h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-secondary" />
 
@@ -23,7 +23,7 @@ const Hero = () => {
                             </div>
                         </div>
 
-                        <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6">
+                        <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-center max-md:w-full">
                             Master Any
                             <span className="block bg-gradient-primary bg-clip-text text-primary">
                 Skill in Hours
@@ -39,7 +39,9 @@ const Hero = () => {
                                 Start Learning
                             </Button>
                             <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-                                Watch Demo
+                                <a href={'#features'}>
+                                    Learn More
+                                </a>
                             </Button>
                         </div>
 
