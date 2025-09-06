@@ -1,8 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { Clock, Menu } from "lucide-react";
-import { useState } from "react";
+import {Button} from "@/components/ui/button";
+import {Clock, Menu} from "lucide-react";
+import {useState} from "react";
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ const Navigation = () => {
                     {/* Logo */}
                     <a href={'/'} className="flex items-center relative z-50">
                         <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-primary" />
+                            <Clock className="w-5 h-5 text-primary"/>
                         </div>
                         <span className="text-xl ">time<span className={' font-bold text-primary'}>2</span>skill</span>
                     </a>
@@ -24,7 +24,8 @@ const Navigation = () => {
                         <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
                             Features
                         </a>
-                        <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
+                        <a href="#how-it-works"
+                           className="text-muted-foreground hover:text-foreground transition-colors">
                             How it Works
                         </a>
                         <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -35,7 +36,12 @@ const Navigation = () => {
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center space-x-4">
                         <Button variant="outline">Sign In</Button>
-                        <Button variant="default">Get Started</Button>
+                        <Button variant="default">
+
+                            <a href={'/workspace'}>
+                                Get Started
+                            </a>
+                        </Button>
                     </div>
 
                     {/* Mobile menu button */}
@@ -45,7 +51,7 @@ const Navigation = () => {
                             size="icon"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
-                            <Menu className="w-5 h-5" />
+                            <Menu className="w-5 h-5"/>
                         </Button>
                     </div>
                 </div>
@@ -54,13 +60,16 @@ const Navigation = () => {
                 {isMenuOpen && (
                     <div className="md:hidden animate-fade-in-bottom bg-background">
                         <div className="px-4 py-6 space-y-4">
-                            <a href="#features" className="block text-muted-foreground hover:text-foreground transition-colors">
+                            <a href="#features"
+                               className="block text-muted-foreground hover:text-foreground transition-colors">
                                 Features
                             </a>
-                            <a href="#how-it-works" className="block text-muted-foreground hover:text-foreground transition-colors">
+                            <a href="#how-it-works"
+                               className="block text-muted-foreground hover:text-foreground transition-colors">
                                 How it Works
                             </a>
-                            <a href="#pricing" className="block text-muted-foreground hover:text-foreground transition-colors">
+                            <a href="#pricing"
+                               className="block text-muted-foreground hover:text-foreground transition-colors">
                                 Pricing
                             </a>
 

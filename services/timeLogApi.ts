@@ -1,8 +1,13 @@
 import api from "@/lib/api/axios";
 import TimeLog, {CreateTimeLog} from "@/lib/types/TimeLog";
 
-export async function getTimeLogs() {
-    const res = await api.get("/timelog");
+export async function getTimeLogs({page = 1, size = 10}: { page?: number, size?: number }) {
+    const res = await api.get("/timelog", {
+        params: {
+            page: page - 1,
+            size,
+        },
+    });
     return res.data;
 }
 
@@ -40,10 +45,10 @@ export async function deleteTimeLog(id: number) {
 
 export async function createTimeLog(timeLog: CreateTimeLog) {
 
-    const newLog:any = {
+    const newLog: any = {
         ...timeLog
     }
-    if(timeLog.category) {
+    if (timeLog.category) {
         newLog.categoryId = timeLog.category?.id;
     }
     try {
