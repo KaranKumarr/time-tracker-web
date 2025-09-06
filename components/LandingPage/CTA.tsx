@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 const CTA = () => {
     return (
-        <section className="py-24 px-6 lg:px-8">
+        <section className="py-24 px-6 lg:px-8 max-sm:px-2">
             <div className="max-w-4xl mx-auto">
                 <Card className="relative overflow-hidden bg-gradient-primary p-12 lg:p-16 text-center border-0 shadow-glow">
                     {/* Background effects */}
@@ -20,7 +20,7 @@ const CTA = () => {
                             </div>
                         </div>
 
-                        <h2 className="text-4xl lg:text-5xl font-bold tebg-foreground mb-6">
+                        <h2 className="text-4xl lg:text-5xl font-bold tebg-foreground mb-6 text-center w-full">
                             Ready to Turn Time Into
                             <span className="block">Expertise?</span>
                         </h2>
@@ -31,19 +31,12 @@ const CTA = () => {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button
-                                variant="secondary"
+                                variant="default"
                                 size="lg"
                                 className="text-lg px-8 py-6"
                             >
                                 Get Started Free
                                 <ArrowRight className="w-5 h-5 ml-2" />
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="lg"
-                                className="text-lg px-8 py-6 tebg-foreground border bordbg-foreground/20 hover:bg-foreground/10"
-                            >
-                                Schedule Demo
                             </Button>
                         </div>
 
