@@ -8,7 +8,7 @@ import Pagination from "@/components/TimeLog/Pagination";
 
 const Page = () => {
 
-    const { timeLogs, total, loadTimeLogs } = useTimeLogs();
+    const { total, loadTimeLogs } = useTimeLogs();
     const params = useSearchParams();
     const router = useRouter();
 
@@ -21,7 +21,13 @@ const Page = () => {
         q.set("page", String(page));
         q.set("size", String(size));
         router.replace(`/workspace?${q.toString()}`);
-    }, [page, size]);
+    }, [loadTimeLogs, page, params, router, size]);
+
+    useEffect(() => {
+        if (page > Math.max(1, Math.ceil(total / size))) {
+            setPage(Math.max(1, Math.ceil(total / size)));
+        }
+    }, [total, page, size]);
 
     return (
         <main className={'p-4'}>
