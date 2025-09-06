@@ -11,6 +11,19 @@ export function formatTimeLogDate(time: string) {
     }
 }
 
+export function generateTimeLogCode(
+    id: number | string,
+    dateString: string
+): string {
+    const date = new Date(dateString); // parse backend date string
+
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 01-12
+    const day = String(date.getDate()).padStart(2, "0");        // 01-31
+    const idPart = String(id).padStart(2, "0");                 // pad at least 2 digits
+
+    return `TL-${month}${day}-${idPart}`;
+}
+
 export function formatStartEndEndTime(startTime: string, endTime: string) {
 
     const endDate = DateTime.fromISO(endTime)
