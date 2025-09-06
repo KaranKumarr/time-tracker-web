@@ -1,17 +1,24 @@
 "use client";
 
-import React, {createContext, useContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 import {createTimeLog, deleteTimeLog, editTimeLog, getTimeLogs} from "@/services/timeLogApi";
 import TimeLog, {CreateTimeLog} from "@/lib/types/TimeLog";
 import {toast} from "sonner";
 
 interface TimeLogContextType {
     timeLogs: TimeLog[];
+    total: number;
     unfinishedTimeLog: CreateTimeLog | undefined;
     setUnfinishedTimeLog: React.Dispatch<React.SetStateAction<CreateTimeLog | undefined>>;
     handleUpdateTimeLog: (timeLog: TimeLog, updatedTimeLog: TimeLog) => void;
     handleDeleteTimeLog: (id: number) => void;
     handleCreateTimeLog: (timeLog: CreateTimeLog) => void;
+    loadTimeLogs: (p: { page: number; size: number }) => Promise<{
+        items: TimeLog[];
+        total: number;
+        page: number;
+        size: number
+    }>;
 }
 
 const TimeLogContext = createContext<TimeLogContextType | undefined>(undefined);
@@ -19,10 +26,13 @@ const TimeLogContext = createContext<TimeLogContextType | undefined>(undefined);
 export function TimeLogProvider({children}: { children: React.ReactNode }) {
     const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
     const [unfinishedTimeLog, setUnfinishedTimeLog] = useState<CreateTimeLog | undefined>();
+    const [total,setTotal] = useState(0)
 
-    const fetchTimeLogs = async () => {
-        const {data} = await getTimeLogs();
-        setTimeLogs(data); // ✅ adjust depending on ApiResponse shape
+    const loadTimeLogs = async ({page, size = 10}: { page: number; size?: number }) => {
+        const res = await getTimeLogs({page, size});
+        setTimeLogs(res.data);
+        setTotal(res.total)
+        return res;
     };
 
     const handleUpdateTimeLog = async (timeLog: TimeLog, updatedTimeLog: TimeLog) => {
@@ -54,10 +64,6 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
         }
     }
 
-    useEffect(() => {
-        fetchTimeLogs();
-    }, []);
-
     return (
         <TimeLogContext.Provider
             value={{
@@ -66,7 +72,9 @@ export function TimeLogProvider({children}: { children: React.ReactNode }) {
                 handleDeleteTimeLog,
                 handleCreateTimeLog,
                 unfinishedTimeLog,
-                setUnfinishedTimeLog
+                setUnfinishedTimeLog,
+                loadTimeLogs,
+                total
             }}
         >
             {children}
