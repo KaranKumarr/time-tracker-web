@@ -17,7 +17,8 @@ interface TimeLogContextType {
         items: TimeLog[];
         total: number;
         page: number;
-        size: number
+        size: number;
+        status: number;
     }>;
 }
 
@@ -26,7 +27,7 @@ const TimeLogContext = createContext<TimeLogContextType | undefined>(undefined);
 export function TimeLogProvider({children}: { children: React.ReactNode }) {
     const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
     const [unfinishedTimeLog, setUnfinishedTimeLog] = useState<CreateTimeLog | undefined>();
-    const [total,setTotal] = useState(0)
+    const [total, setTotal] = useState(0)
 
     const loadTimeLogs = async ({page, size = 10}: { page: number; size?: number }) => {
         const res = await getTimeLogs({page, size});

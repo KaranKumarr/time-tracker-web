@@ -15,9 +15,9 @@ export default function Layout({
         <CategoryProvider>
             <TimeLogProvider>
                 <SidebarProvider>
-                    <div className="flex flex-col w-full">
+                    <div className="flex flex-col w-full flex-1 overflow-hidden">
                         <Navbar/>
-                        <div className="flex">
+                        <div className="flex flex-1">
                             <AppSidebar/>
                             <SidebarInset>
                                 {children}
