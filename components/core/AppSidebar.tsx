@@ -13,17 +13,17 @@ export function AppSidebar() {
     const items = [
         {
             title: "Time Tracking",
-            url: "#",
+            url: "/workspace/",
             icon: Clock7,
         },
         {
             title: "Goals",
-            url: "#",
+            url: "/workspace/goals",
             icon: Logs,
         },
         {
             title: "Progress",
-            url: "#",
+            url: "/workspace/stats",
             icon: ChartSpline,
         },
 
