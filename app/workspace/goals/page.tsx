@@ -3,10 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {useCategories} from "@/context/CategoryContext";
 import CategoryList from "@/components/Category/CategoryList";
 import GoalStatus from "@/lib/types/GoalStatus";
+import {Button} from "@/components/ui/button";
+import {Plus} from "lucide-react";
+import CategoryDialog from "@/components/Category/CategoryDialog";
 
 const Page = () => {
 
-    const {categories} = useCategories()
+    const {categories, handleCreateCategory} = useCategories()
 
     const [grouped, setGrouped] = useState<Record<GoalStatus, typeof categories>>({
         [GoalStatus.ACTIVE]: [],
@@ -32,7 +35,7 @@ const Page = () => {
     }, [categories]);
 
     return (
-        <main className={'p-4 space-y-4'}>
+        <main className={'p-4 space-y-4 relative'}>
             <header>
                 <h2>
                     Goals
@@ -44,9 +47,31 @@ const Page = () => {
 
             {Object.entries(grouped).map(([status, items]) =>
                 items.length > 0 ? (
-                        <CategoryList key={status} categories={items} status={status as GoalStatus} />
+                    <CategoryList key={status} categories={items} status={status as GoalStatus}/>
                 ) : null
             )}
+
+
+            <CategoryDialog
+                initialCategory={{
+                    id: 0,
+                    name: "",
+                    description: "",
+                    goalHours: 0,
+                    loggedMinutes: 0,
+                    createdAt: "",
+                    deadline: null,
+                    status: GoalStatus.ACTIVE,
+                }}
+                title="Create Category"
+                onSubmit={(cat) => {
+                    handleCreateCategory(cat)
+                }}
+            >
+                <Button size={'lg'} className={'fixed right-0 bottom-0 m-12'}>
+                    <Plus/>
+                </Button>
+            </CategoryDialog>
         </main>
     );
 };

@@ -2,13 +2,14 @@ import React from 'react';
 import Category from "@/lib/types/Category";
 import {Card, CardContent, CardDescription, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Archive, EllipsisVertical, Trash} from "lucide-react";
+import {Archive, EllipsisVertical, SquarePen, Trash} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
 import {formatTimeLogDate} from "@/lib/timeformat";
 import CategoryDialog from "@/components/Category/CategoryDialog";
 import {useCategories} from "@/context/CategoryContext";
 import ConfirmDialog from "@/components/core/ConfirmDialog";
 import GoalStatus from "@/lib/types/GoalStatus";
+import {DialogTrigger} from "@/components/ui/dialog";
 
 
 const CategoryCard = ({category}: { category: Category }) => {
@@ -50,9 +51,17 @@ const CategoryCard = ({category}: { category: Category }) => {
                         <EllipsisVertical className={'group-hover:rotate-90 transition-all'}/>
                         <div
                             className={'shadow-lg animate-fade-in-bottom absolute w-9 border-t flex-col z-10 hidden rounded-b group-hover:flex top-9 bg-accent'}>
-                            <CategoryDialog handleSubmit={(updatedCategory) => {
+                            <CategoryDialog
+                                title="Edit Category"
+                                onSubmit={(updatedCategory) => {
                                 handleUpdateCategory(category, updatedCategory)
-                            }} category={category}/>
+                            }} initialCategory={category}>
+                                <Button asChild={true} className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
+                                    <DialogTrigger>
+                                        <SquarePen className={'text-foreground'}/>
+                                    </DialogTrigger>
+                                </Button>
+                            </CategoryDialog>
 
                             {/*Archive Button*/}
                             <ConfirmDialog

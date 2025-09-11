@@ -1,5 +1,6 @@
 import api from "@/lib/api/axios";
 import Category from "@/lib/types/Category";
+import {CreateTimeLog} from "@/lib/types/TimeLog";
 
 export async function getCategories() {
     try {
@@ -43,6 +44,16 @@ export async function updateCategory(category: Category, updatedCategory: Catego
 export async function deleteCategory(id: number) {
     try {
         const res = await api.delete("/category/" + id);
+        return res.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function createCategory(category: Category) {
+    const { name, description, goalHours, loggedMinutes, status, deadline } = category;
+    try {
+        const res = await api.post("/category", { name, description, goalHours, loggedMinutes, status, deadline });
         return res.data;
     } catch (e) {
         console.log(e);

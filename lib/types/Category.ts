@@ -10,4 +10,3 @@ export default interface Category {
     status: GoalStatus;
     deadline: string | null;
 }
-

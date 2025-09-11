@@ -2,13 +2,14 @@
 
 import React, {createContext, useContext, useEffect, useState} from "react";
 import Category from "@/lib/types/Category";
-import {deleteCategory, getCategories, updateCategory} from "@/services/categoryApi";
+import {createCategory, deleteCategory, getCategories, updateCategory} from "@/services/categoryApi";
 import {toast} from "sonner";
 
 interface CategoryContextType {
     categories: Category[];
     handleUpdateCategory: (category: Category, updatedCategory: Category) => void;
     handleDeleteCategory: (id: number) => void;
+    handleCreateCategory: (category: Category) => void
 }
 
 const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
@@ -45,6 +46,13 @@ export function CategoryProvider({children}: { children: React.ReactNode }) {
         }
     }
 
+    const handleCreateCategory = async (category: Category) => {
+        const res = await createCategory(category)
+        if (res && res.status === 201) {
+            setCategories([...categories, res.data])
+            toast.success("Timer Start!!")
+        }
+    }
 
     useEffect(() => {
         fetchCategories();
@@ -52,7 +60,7 @@ export function CategoryProvider({children}: { children: React.ReactNode }) {
 
     return (
         <CategoryContext.Provider
-            value={{categories, handleUpdateCategory, handleDeleteCategory}}
+            value={{categories, handleUpdateCategory, handleDeleteCategory, handleCreateCategory}}
         >
             {children}
         </CategoryContext.Provider>
