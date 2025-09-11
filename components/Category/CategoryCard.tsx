@@ -13,7 +13,7 @@ import GoalStatus from "@/lib/types/GoalStatus";
 
 const CategoryCard = ({category}: { category: Category }) => {
 
-    const {handleUpdateCategory} = useCategories()
+    const {handleUpdateCategory, handleDeleteCategory} = useCategories()
 
     const handleArchive = () => {
         let newStatus: GoalStatus;
@@ -33,7 +33,7 @@ const CategoryCard = ({category}: { category: Category }) => {
         }
         const newCategory: Category = {
             ...category,
-            status: category.status === GoalStatus.ARCHIVED ? GoalStatus.ACTIVE : GoalStatus.ARCHIVED
+            status: newStatus
         }
         handleUpdateCategory(category, newCategory)
     }
@@ -58,13 +58,13 @@ const CategoryCard = ({category}: { category: Category }) => {
                             <ConfirmDialog
                                 title={
                                     category.status === GoalStatus.ARCHIVED
-                                        ? "Unarchive category?"
+                                        ? "Unarchive goal?"
                                         : "Confirm archive?"
                                 }
                                 description={
                                     category.status === GoalStatus.ARCHIVED
-                                        ? "Bring this category back from storage."
-                                        : "Do you really want to tuck this category under the rug?"
+                                        ? "Bring this goal back from storage."
+                                        : "Do you really want to tuck this goal under the rug?"
                                 }
                                 confirmLabel={
                                     category.status === GoalStatus.ARCHIVED
@@ -86,9 +86,17 @@ const CategoryCard = ({category}: { category: Category }) => {
                             </ConfirmDialog>
 
 
-                            <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
-                                <Trash className={'text-foreground'}/>
-                            </Button>
+                            <ConfirmDialog
+                                title={'Confirm Delete'}
+                                description={'Are you sure you want to delete this goal? Once deleted, all time-logs under this goal will be marked with no goal.'}
+                                confirmLabel={"Yes, send it to void!"}
+                                confirmVariant={'destructive'}
+                                onConfirm={() => handleDeleteCategory(category.id)}
+                            >
+                                <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
+                                    <Trash className={'text-foreground'}/>
+                                </Button>
+                            </ConfirmDialog>
                         </div>
                     </div>
 

@@ -11,7 +11,7 @@ export async function getCategories() {
     }
 }
 
-export async function editCategory(category: Category, updatedCategory: Category) {
+export async function updateCategory(category: Category, updatedCategory: Category) {
     const updates: any = {};
 
     if (category.name !== updatedCategory.name) {
@@ -29,7 +29,6 @@ export async function editCategory(category: Category, updatedCategory: Category
     if (category.status !== updatedCategory.status) {
         updates.status = updatedCategory.status;
     }
-    console.log(updates)
 
     try {
         const res = await api.patch(`/category/${category.id}`, updates);
@@ -37,5 +36,15 @@ export async function editCategory(category: Category, updatedCategory: Category
     } catch (e) {
         console.error(e);
         throw e;
+    }
+}
+
+
+export async function deleteCategory(id: number) {
+    try {
+        const res = await api.delete("/category/" + id);
+        return res.data;
+    } catch (e) {
+        console.log(e);
     }
 }

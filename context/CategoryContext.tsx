@@ -2,14 +2,13 @@
 
 import React, {createContext, useContext, useEffect, useState} from "react";
 import Category from "@/lib/types/Category";
-import {editCategory, getCategories} from "@/services/categoryApi";
-import TimeLog from "@/lib/types/TimeLog";
-import {editTimeLog} from "@/services/timeLogApi";
+import {deleteCategory, getCategories, updateCategory} from "@/services/categoryApi";
 import {toast} from "sonner";
 
 interface CategoryContextType {
     categories: Category[];
-    handleUpdateCategory: (category: Category, updatedCategory: Category) => void
+    handleUpdateCategory: (category: Category, updatedCategory: Category) => void;
+    handleDeleteCategory: (id: number) => void;
 }
 
 const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
@@ -26,9 +25,8 @@ export function CategoryProvider({children}: { children: React.ReactNode }) {
         }
     };
 
-
-    const handleUpdateCategory = async (category:Category, updatedCategory:Category) => {
-        const res = await editCategory(category, updatedCategory)
+    const handleUpdateCategory = async (category: Category, updatedCategory: Category) => {
+        const res = await updateCategory(category, updatedCategory)
         if (res && res.status === 200) {
             setCategories((prev) =>
                 prev.map((tl) => (tl.id === category.id ? res.data : tl))
@@ -37,14 +35,24 @@ export function CategoryProvider({children}: { children: React.ReactNode }) {
         }
     }
 
-    // Load on mount
+    const handleDeleteCategory = async (id: number) => {
+        const res = await deleteCategory(id)
+        if (res && res.status === 204) {
+            setCategories((prev) =>
+                prev.filter((tl) => tl.id !== id)
+            );
+            toast.success("Deleted!")
+        }
+    }
+
+
     useEffect(() => {
         fetchCategories();
     }, []);
 
     return (
         <CategoryContext.Provider
-            value={{categories,handleUpdateCategory}}
+            value={{categories, handleUpdateCategory, handleDeleteCategory}}
         >
             {children}
         </CategoryContext.Provider>
