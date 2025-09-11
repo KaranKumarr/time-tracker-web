@@ -1,8 +1,9 @@
 "use client"
 
 import {Button} from "@/components/ui/button";
-import {Clock, Menu} from "lucide-react";
+import {Menu} from "lucide-react";
 import {useState} from "react";
+import Logo from "@/components/core/Logo";
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,12 +13,7 @@ const Navigation = () => {
             <div className="w-full md:max-w-7xl mx-auto px-6 lg:px-8 z-10">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <a href={'/'} className="flex items-center relative z-50">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-primary"/>
-                        </div>
-                        <span className="text-xl ">time<span className={' font-bold text-primary'}>2</span>skill</span>
-                    </a>
+                    <Logo home={'/'}/>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">

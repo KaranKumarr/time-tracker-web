@@ -12,7 +12,7 @@ const CategoryCard = ({category}: { category: Category }) => {
     return (
         <Card className={'flex flex-col gap-0 space-y-3'}>
             <CardHeader className={'flex justify-between items-center '}>
-                <h5>
+                <h5 className={'font-medium'}>
                     {category.name}
                 </h5>
                 <div>

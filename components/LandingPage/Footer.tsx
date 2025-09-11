@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { Clock } from "lucide-react";
+import Logo from "@/components/core/Logo";
 
 const Footer = () => {
     const footerLinks = [
@@ -21,12 +21,7 @@ const Footer = () => {
                     <div className="grid lg:grid-cols-7 gap-12">
                         {/* Brand Section */}
                         <div className="lg:col-span-3">
-                            <a href={'/'} className="flex items-center">
-                                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                                    <Clock className="w-5 h-5 text-primary" />
-                                </div>
-                                <span className="text-xl ">time<span className={' font-bold text-primary'}>2</span>skill</span>
-                            </a>
+                            <Logo home={'/'}/>
                             <p className="text-muted-foreground mb-6 max-w-sm">
                                 Transform your learning journey with hour-based goal tracking. Turn time into expertise, one hour at a time.
                             </p>
