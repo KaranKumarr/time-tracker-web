@@ -89,19 +89,21 @@ const CategoryFormDialog = ({
                                 onDateTimeChange={(date) => setDraft({...draft, deadline: date})}
                                 initialDate={draft.deadline}
                             />
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        className="hover:text-primary"
-                                        onClick={handleDeadlineRemove}
-                                    >
-                                        <Trash/>
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>Remove deadline?</TooltipContent>
-                            </Tooltip>
+                            {
+                                draft.deadline && <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button
+                                            type="button"
+                                            variant="secondary"
+                                            className="hover:text-primary"
+                                            onClick={handleDeadlineRemove}
+                                        >
+                                            <Trash/>
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>Remove deadline?</TooltipContent>
+                                </Tooltip>
+                            }
                         </div>
                     </div>
 
