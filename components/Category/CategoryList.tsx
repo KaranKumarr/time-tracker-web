@@ -16,7 +16,7 @@ const CategoryList = ({categories,status}:CategoryListProps) => {
                     {status}
                 </h4>
             </header>
-            <ul className={'grid grid-cols-4 gap-4'}>
+            <ul className={'grid grid-cols-4 gap-4 max-2xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1'}>
                 {categories.map((category)=>{
                     return <CategoryCard key={category.id} category={category}/>
                 })}

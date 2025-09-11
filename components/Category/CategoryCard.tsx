@@ -4,12 +4,13 @@ import {Card, CardContent, CardDescription, CardHeader} from "@/components/ui/ca
 import {Button} from "@/components/ui/button";
 import {Archive, EllipsisVertical, Pencil, Trash} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
+import {formatTimeLogDate} from "@/lib/timeformat";
 
 
 const CategoryCard = ({category}: { category: Category }) => {
     console.log(category.loggedMinutes)
     return (
-        <Card className={'flex flex-col aspect-video'}>
+        <Card className={'flex flex-col gap-0 space-y-3'}>
             <CardHeader className={'flex justify-between items-center '}>
                 <h5>
                     {category.name}
@@ -42,11 +43,18 @@ const CategoryCard = ({category}: { category: Category }) => {
                 {category.goalHours > 0 ? <div className={'space-y-1'}>
                     <div className={'flex justify-between items-center'}>
                         <p className={'text-sm'}>Progress so far</p>
-                        <p className={'text-sm '}><span
+                        <p className={'text-sm text-end'}><span
                             className={'text-muted-foreground'}> End Goal : </span>{category.goalHours}h</p>
                     </div>
                     <Progress value={((category.loggedMinutes/60)/category.goalHours) *100}/>
                 </div> : null}
+                {
+                    category.deadline ? <div>
+                        <p className={'text-primary text-sm font-medium'}>
+                         <span className={'text-muted-foreground font-normal'}>Due On: </span>   {formatTimeLogDate(category.deadline)}
+                        </p>
+                    </div> : null
+                }
             </CardContent>
         </Card>
     );
