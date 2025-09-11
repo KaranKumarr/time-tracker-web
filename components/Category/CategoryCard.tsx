@@ -7,6 +7,8 @@ import {Progress} from "@/components/ui/progress";
 import {formatTimeLogDate} from "@/lib/timeformat";
 import CategoryDialog from "@/components/Category/CategoryDialog";
 import {useCategories} from "@/context/CategoryContext";
+import ConfirmDialog from "@/components/core/ConfirmDialog";
+import GoalStatus from "@/lib/types/GoalStatus";
 
 
 const CategoryCard = ({category}: { category: Category }) => {
@@ -28,9 +30,23 @@ const CategoryCard = ({category}: { category: Category }) => {
                             <CategoryDialog handleSubmit={(updatedCategory) => {
                                 handleUpdateCategory(category, updatedCategory)
                             }} category={category}/>
-                            <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
-                                <Archive className={'text-foreground'}/>
-                            </Button>
+                            <ConfirmDialog
+                                title="Confirm archive?"
+                                description="Do you really want to archive this category?"
+                                confirmLabel="Yes, Tuck it under the rug!"
+                                confirmVariant="default"
+                                onConfirm={() => {
+                                    const newCategory: Category = {
+                                        ...category,
+                                        status: GoalStatus.ARCHIVED
+                                    }
+                                    handleUpdateCategory(category, newCategory)
+                                }}
+                            >
+                                <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
+                                    <Archive className={'text-foreground'}/>
+                                </Button>
+                            </ConfirmDialog>
                             <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
                                 <Trash className={'text-foreground'}/>
                             </Button>
