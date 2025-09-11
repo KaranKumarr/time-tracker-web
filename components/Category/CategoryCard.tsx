@@ -15,6 +15,29 @@ const CategoryCard = ({category}: { category: Category }) => {
 
     const {handleUpdateCategory} = useCategories()
 
+    const handleArchive = () => {
+        let newStatus: GoalStatus;
+
+        if (category.status === GoalStatus.ARCHIVED) {
+            const isExpired =
+                !!category.deadline && new Date(category.deadline) < new Date();
+            const isCompleted =
+                category.goalHours > 0 &&
+                category.loggedMinutes >= category.goalHours * 60;
+
+            if (isExpired) newStatus = GoalStatus.EXPIRED;
+            else if (isCompleted) newStatus = GoalStatus.COMPLETED;
+            else newStatus = GoalStatus.ACTIVE;
+        } else {
+            newStatus = GoalStatus.ARCHIVED;
+        }
+        const newCategory: Category = {
+            ...category,
+            status: category.status === GoalStatus.ARCHIVED ? GoalStatus.ACTIVE : GoalStatus.ARCHIVED
+        }
+        handleUpdateCategory(category, newCategory)
+    }
+
     return (
         <Card className={'flex flex-col gap-0 space-y-3'}>
             <CardHeader className={'flex justify-between items-center '}>
@@ -30,23 +53,39 @@ const CategoryCard = ({category}: { category: Category }) => {
                             <CategoryDialog handleSubmit={(updatedCategory) => {
                                 handleUpdateCategory(category, updatedCategory)
                             }} category={category}/>
+
+                            {/*Archive Button*/}
                             <ConfirmDialog
-                                title="Confirm archive?"
-                                description="Do you really want to archive this category?"
-                                confirmLabel="Yes, Tuck it under the rug!"
+                                title={
+                                    category.status === GoalStatus.ARCHIVED
+                                        ? "Unarchive category?"
+                                        : "Confirm archive?"
+                                }
+                                description={
+                                    category.status === GoalStatus.ARCHIVED
+                                        ? "Bring this category back from storage."
+                                        : "Do you really want to tuck this category under the rug?"
+                                }
+                                confirmLabel={
+                                    category.status === GoalStatus.ARCHIVED
+                                        ? "Yes, restore it!"
+                                        : "Yes, archive it!"
+                                }
                                 confirmVariant="default"
-                                onConfirm={() => {
-                                    const newCategory: Category = {
-                                        ...category,
-                                        status: GoalStatus.ARCHIVED
-                                    }
-                                    handleUpdateCategory(category, newCategory)
-                                }}
+                                onConfirm={handleArchive}
                             >
-                                <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
-                                    <Archive className={'text-foreground'}/>
+                                <Button
+                                    className="rounded-none hover:bg-background transition-all relative"
+                                    variant="link"
+                                >
+                                    <Archive className="text-foreground"/>
+                                    {category.status === GoalStatus.ARCHIVED && (
+                                        <div className="h-px w-6 absolute bg-foreground rotate-45"/>
+                                    )}
                                 </Button>
                             </ConfirmDialog>
+
+
                             <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
                                 <Trash className={'text-foreground'}/>
                             </Button>
