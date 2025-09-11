@@ -5,7 +5,6 @@
 @custom-variant dark (&:is(.dark *));
 
 
-
 @theme {
     --animate-fade-in: fade-in .3s ease-in;
     @keyframes fade-in {
@@ -60,7 +59,7 @@
     --color-input: var(--input);
     --color-border: var(--border);
     --color-destructive: var(--destructive);
-    --color-success:var(--success);
+    --color-success: var(--success);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent: var(--accent);
     --color-muted-foreground: var(--muted-foreground);
@@ -157,7 +156,7 @@
         font-style: normal;
     }
 
-    .Logo, .Logo *{
+    .Logo, .Logo * {
         font-family: "Exo 2", sans-serif !important;
         font-optical-sizing: auto;
         font-style: normal;
@@ -176,19 +175,27 @@
         2xl:max-w-2xl;
     }
 
+    input[type="number"] {
+        @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none
+    }
+
     h1 {
         @apply w-max scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance;
     }
-    h2{
+
+    h2 {
         @apply w-max scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0;
     }
-    h3{
+
+    h3 {
         @apply w-max scroll-m-20 text-2xl font-semibold tracking-tight;
     }
-    h4{
+
+    h4 {
         @apply w-max scroll-m-20 text-xl font-semibold tracking-tight;
     }
-    button{
+
+    button {
         @apply cursor-pointer;
     }
 }

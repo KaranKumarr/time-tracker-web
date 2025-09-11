@@ -2,13 +2,17 @@ import React from 'react';
 import Category from "@/lib/types/Category";
 import {Card, CardContent, CardDescription, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Archive, EllipsisVertical, Pencil, Trash} from "lucide-react";
+import {Archive, EllipsisVertical, Trash} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
 import {formatTimeLogDate} from "@/lib/timeformat";
+import CategoryDialog from "@/components/Category/CategoryDialog";
+import {useCategories} from "@/context/CategoryContext";
 
 
 const CategoryCard = ({category}: { category: Category }) => {
-    console.log(category.loggedMinutes)
+
+    const {handleUpdateCategory} = useCategories()
+
     return (
         <Card className={'flex flex-col gap-0 space-y-3'}>
             <CardHeader className={'flex justify-between items-center '}>
@@ -21,9 +25,9 @@ const CategoryCard = ({category}: { category: Category }) => {
                         <EllipsisVertical className={'group-hover:rotate-90 transition-all'}/>
                         <div
                             className={'shadow-lg animate-fade-in-bottom absolute w-9 border-t flex-col z-10 hidden rounded-b group-hover:flex top-9 bg-accent'}>
-                            <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
-                                <Pencil className={'text-foreground'}/>
-                            </Button>
+                            <CategoryDialog handleSubmit={(updatedCategory) => {
+                                handleUpdateCategory(category, updatedCategory)
+                            }} category={category}/>
                             <Button className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
                                 <Archive className={'text-foreground'}/>
                             </Button>
@@ -37,7 +41,7 @@ const CategoryCard = ({category}: { category: Category }) => {
             </CardHeader>
 
             <CardContent className={'flex-1 h-full space-y-2'}>
-                <CardDescription >
+                <CardDescription>
                     {category.description.length > 0 ? category.description : "No description provided."}
                 </CardDescription>
                 {category.goalHours > 0 ? <div className={'space-y-1'}>
@@ -46,12 +50,13 @@ const CategoryCard = ({category}: { category: Category }) => {
                         <p className={'text-sm text-end'}><span
                             className={'text-muted-foreground'}> End Goal : </span>{category.goalHours}h</p>
                     </div>
-                    <Progress value={((category.loggedMinutes/60)/category.goalHours) *100}/>
+                    <Progress value={((category.loggedMinutes / 60) / category.goalHours) * 100}/>
                 </div> : null}
                 {
                     category.deadline ? <div>
                         <p className={'text-primary text-sm font-medium'}>
-                         <span className={'text-muted-foreground font-normal'}>Due On: </span>   {formatTimeLogDate(category.deadline)}
+                            <span
+                                className={'text-muted-foreground font-normal'}>Due On: </span> {formatTimeLogDate(category.deadline)}
                         </p>
                     </div> : null
                 }

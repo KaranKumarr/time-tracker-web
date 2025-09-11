@@ -1,26 +1,41 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import Category from "@/lib/types/Category";
-import {getCategories} from "@/services/categoryApi";
+import {editCategory, getCategories} from "@/services/categoryApi";
+import TimeLog from "@/lib/types/TimeLog";
+import {editTimeLog} from "@/services/timeLogApi";
+import {toast} from "sonner";
 
 interface CategoryContextType {
     categories: Category[];
+    handleUpdateCategory: (category: Category, updatedCategory: Category) => void
 }
 
 const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
 
-export function CategoryProvider({ children }: { children: React.ReactNode }) {
+export function CategoryProvider({children}: { children: React.ReactNode }) {
     const [categories, setCategories] = useState<Category[]>([]);
 
     const fetchCategories = async () => {
         try {
             const {data} = await getCategories();
-            setCategories(data); // ✅ adjust depending on ApiResponse shape
+            setCategories(data);
         } catch (err) {
             console.error("Failed to fetch categories", err);
         }
     };
+
+
+    const handleUpdateCategory = async (category:Category, updatedCategory:Category) => {
+        const res = await editCategory(category, updatedCategory)
+        if (res && res.status === 200) {
+            setCategories((prev) =>
+                prev.map((tl) => (tl.id === category.id ? res.data : tl))
+            );
+            toast.success("Updated!")
+        }
+    }
 
     // Load on mount
     useEffect(() => {
@@ -29,7 +44,7 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <CategoryContext.Provider
-            value={{ categories}}
+            value={{categories,handleUpdateCategory}}
         >
             {children}
         </CategoryContext.Provider>
