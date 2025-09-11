@@ -29,6 +29,7 @@ export async function editCategory(category: Category, updatedCategory: Category
     if (category.status !== updatedCategory.status) {
         updates.status = updatedCategory.status;
     }
+    console.log(updates)
 
     try {
         const res = await api.patch(`/category/${category.id}`, updates);

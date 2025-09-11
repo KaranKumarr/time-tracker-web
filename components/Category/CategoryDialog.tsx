@@ -18,8 +18,10 @@ const CategoryDialog = ({category, handleSubmit}: CategoryDialogProps) => {
 
     const [updatedCategory, setUpdatedCategory] = useState<Category>(category)
 
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+
     return (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
 
             <Button asChild={true} className={'rounded-none hover:bg-background transition-all'} variant={'link'}>
                 <DialogTrigger>
@@ -92,7 +94,13 @@ const CategoryDialog = ({category, handleSubmit}: CategoryDialogProps) => {
                                     initialDate={updatedCategory.deadline}/>
                                 <Tooltip>
                                     <TooltipTrigger asChild={true}>
-                                        <Button className={'hover:text-primary'} variant={'secondary'}>
+                                        <Button onClick={() => {
+                                            setUpdatedCategory({...updatedCategory, deadline: null})
+                                            if (updatedCategory.id > 0) {
+                                                handleSubmit(updatedCategory)
+                                                setIsDialogOpen(false)
+                                            }
+                                        }} type={'button'} className={'hover:text-primary'} variant={'secondary'}>
                                             <Trash/>
                                         </Button>
                                     </TooltipTrigger>

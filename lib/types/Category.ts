@@ -8,6 +8,6 @@ export default interface Category {
     loggedMinutes: number;
     createdAt: string;
     status: GoalStatus;
-    deadline: string;
+    deadline: string | null;
 }
 
