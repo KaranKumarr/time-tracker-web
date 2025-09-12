@@ -8,15 +8,15 @@ import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {DateTime} from "luxon";
 
 type DateTimePickerProps = {
-    initialDate: string;
+    initialDate: string | null;
     onDateTimeChange: (date: string) => void;
 }
 
 export default function DateTimePicker({initialDate, onDateTimeChange}: DateTimePickerProps) {
     const [open, setOpen] = React.useState(false)
-    const [date, setDate] = React.useState<Date | undefined>(DateTime.fromISO(initialDate).toJSDate())
-    const [time, setTime] = React.useState<string>(
-        DateTime.fromISO(initialDate).toFormat("HH:mm:ss")
+    const [date, setDate] = React.useState<Date | undefined>(initialDate ? DateTime.fromISO(initialDate).toJSDate() : undefined)
+    const [time, setTime] = React.useState<string>(initialDate ?
+        DateTime.fromISO(initialDate).toFormat("HH:mm:ss") : ""
     )
 
     return (
@@ -56,9 +56,9 @@ export default function DateTimePicker({initialDate, onDateTimeChange}: DateTime
                     </PopoverTrigger>
                     <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                         <Calendar
-                            defaultMonth={date}
+                            defaultMonth={date ?? new Date()}
                             mode="single"
-                            selected={date}
+                            selected={date ?? new Date()}
                             captionLayout="dropdown"
                             onSelect={(date) => {
                                 setDate(date)
@@ -69,6 +69,9 @@ export default function DateTimePicker({initialDate, onDateTimeChange}: DateTime
                                 setDate(updated.toJSDate());
                                 if (newDate) {
                                     onDateTimeChange(newDate);
+                                }
+                                if (time.length === 0) {
+                                    setTime("00:00:00")
                                 }
                                 setOpen(false)
                             }}
