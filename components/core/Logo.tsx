@@ -9,7 +9,7 @@ function Logo({home}: { home: string }) {
                 <Clock className="w-5 h-5 text-primary"/>
             </div>
             <span className="text-xl  font-medium">
-          time<span className={" font-bold text-primary"}>2</span>skill
+          time<span className={" font-bold text-primary"}>2</span>goal
         </span>
         </a>
     );
