@@ -26,13 +26,27 @@ const Page = () => {
             [GoalStatus.EXPIRED]: [],
         };
 
+        const now = new Date();
+
         for (const cat of categories) {
-            if (cat.status) {
-                groups[cat.status].push(cat);
+            let status = cat.status;
+
+            // if not completed and has a deadline in the past → show as EXPIRED
+            if (
+                status !== GoalStatus.COMPLETED &&
+                status !== GoalStatus.ARCHIVED &&
+                cat.deadline &&
+                new Date(cat.deadline) < now
+            ) {
+                status = GoalStatus.EXPIRED;
             }
+
+            groups[status].push(cat);
         }
+
         setGrouped(groups);
     }, [categories]);
+
 
     return (
         <main className={'p-4 space-y-4 relative'}>
