@@ -4,7 +4,7 @@ import {Card, CardContent, CardDescription, CardHeader} from "@/components/ui/ca
 import {Button} from "@/components/ui/button";
 import {Archive, EllipsisVertical, SquarePen, Trash} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
-import {formatTimeLogDate} from "@/lib/timeformat";
+import {formatMinutesDurationToHours, formatTimeLogDate} from "@/lib/timeformat";
 import CategoryDialog from "@/components/Category/CategoryDialog";
 import {useCategories} from "@/context/CategoryContext";
 import ConfirmDialog from "@/components/core/ConfirmDialog";
@@ -113,7 +113,7 @@ const CategoryCard = ({category}: { category: Category }) => {
             </CardHeader>
 
             <CardContent className={'flex-1 h-full space-y-2'}>
-                <CardDescription>
+                <CardDescription className={'line-clamp-4'}>
                     {category.description.length > 0 ? category.description : "No description provided."}
                 </CardDescription>
                 {category.goalHours > 0 ? <div className={'space-y-1'}>
@@ -124,6 +124,12 @@ const CategoryCard = ({category}: { category: Category }) => {
                     </div>
                     <Progress value={((category.loggedMinutes / 60) / category.goalHours) * 100}/>
                 </div> : null}
+                <div>
+                    <p className={'text-primary text-sm font-medium'}>
+                            {formatMinutesDurationToHours(category.loggedMinutes)} <span
+                        className={'text-muted-foreground font-normal'}>tracked on this goal</span>
+                    </p>
+                </div>
                 {
                     category.deadline ? <div>
                         <p className={'text-primary text-sm font-medium'}>
